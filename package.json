@@ -1,7 +1,7 @@
 {
   "name": "@codewithkyle/messaging",
   "version": "1.0.0",
-  "description": "An actor model messaging library.",
+  "description": "A lightweight (1kb) Actor Model messaging library for the web.",
   "main": "messaging.min.mjs",
   "types": "messaging.d.ts",
   "files": [
