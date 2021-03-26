@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modal Maker</title>
+	<link href="https://unpkg.com/brixi@0.3.3/brixi.min.css" rel="stylesheet">
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+		body{
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		}
+		button{
+			border: none;
+			outline: none;
+			background: transparent;
+		}
+	</style>
+</head>
+<body class="m-0 bg-grey-200 w-screen h-screen" flex="items-center justify-center">
+	
+	<button class="js-send bg-primary-700 font-white px-1 radius-0.25 font-sm font-medium m-0.5 cursor-pointer shadow-md text-uppercase" flex="items-center justify-center" style="height: 36px;">Send Message</button>
+	<button class="js-kill bg-primary-700 font-white px-1 radius-0.25 font-sm font-medium m-0.5 cursor-pointer shadow-md text-uppercase" flex="items-center justify-center" style="height: 36px;">Unregister</button>
+
+	<script type="module">
+        import { register, unregister, message, reply } from "./messaging.min.mjs";
+
+        const inbox1 = ({ data, replyId }) => {
+            console.log(data, replyId);
+            reply(replyId, {
+                data: "reply",
+                senderId: inboxId,
+            });
+        }
+        const inboxId = register("inbox1", inbox1);
+
+        const inbox2 = ({ data, replyId }) => {
+            console.log(data, replyId);
+            setTimeout(() => {
+                reply(replyId, {
+                    data: "back and forth",
+                });
+            }, 3000);
+        }
+        const inbox2Id = register("inbox2", inbox2);
+
+        const sendBttn = document.body.querySelector(".js-send");
+        sendBttn.addEventListener("click", () => {
+            message({
+                recipient: "inbox1",
+                data: "hello world",
+                senderId: inbox2Id,
+            });
+        });
+
+        const killBttn = document.body.querySelector(".js-kill");
+        killBttn.addEventListener("click", () => {
+            unregister(inboxId);
+        });
+	</script>
+</body>
+</html>

@@ -10,8 +10,8 @@
     "messaging.d.ts"
 	],
   "scripts": {
-    "build": "esbuild ./src/messaging.ts --outfile=messaging.min.mjs --format=esm --minify --bundle && esbuild ./src/messaging.ts --outfile=messaging.min.js --format=iife --bundle --minify-whitespace --global-name=Msg",
-		"test": "npm run build && cp ./modals.min.js ./test/modals.min.js && cp ./modals.min.mjs ./test/modals.min.mjs && serve ./test"
+    "build": "esbuild ./src/messaging.ts --outfile=messaging.min.mjs --format=esm --minify --bundle && esbuild ./src/messaging.ts --outfile=messaging.min.js --format=iife --bundle --minify-whitespace --global-name=Messenger",
+		"test": "npm run build && cp ./messaging.min.js ./test/messaging.min.js && cp ./messaging.min.mjs ./test/messaging.min.mjs && serve ./test"
   },
   "author": "Kyle Andrews <codingwithkyle@gmail.com>",
   "license": "MIT",
