@@ -1,6 +1,6 @@
 # Actor Model Messaging
 
-A lightweight (1kb) Actor Model messaging library for the web.
+A lightweight (1.2kb) Actor Model messaging library for the web.
 
 ## Install
 
