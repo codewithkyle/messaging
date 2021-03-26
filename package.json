@@ -1,0 +1,22 @@
+{
+  "name": "@codewithkyle/messaging",
+  "version": "1.0.0",
+  "description": "An actor model messaging library.",
+  "main": "messaging.min.mjs",
+  "types": "messaging.d.ts",
+  "files": [
+		"messaging.min.js",
+		"messaging.min.mjs",
+    "messaging.d.ts"
+	],
+  "scripts": {
+    "build": "esbuild ./src/messaging.ts --outfile=messaging.min.mjs --format=esm --minify --bundle && esbuild ./src/messaging.ts --outfile=messaging.min.js --format=iife --bundle --minify-whitespace --global-name=Msg",
+		"test": "npm run build && cp ./modals.min.js ./test/modals.min.js && cp ./modals.min.mjs ./test/modals.min.mjs && serve ./test"
+  },
+  "author": "Kyle Andrews <codingwithkyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.10.1",
+    "serve": "^11.3.2"
+  }
+}
