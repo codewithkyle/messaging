@@ -21,24 +21,27 @@ class ActorModel {
     }
 
     private flushQueue(){
-        const queue = this.queue.splice(0, this.queue.length - 1);
-        for (let i = queue.length - 1; i >= 0; i--){
-            if (this.inboxes?.[queue[i].recipient]){
-                const message:InboxEvent = {
-                    data: queue[i].data,
-                    replyId: queue[i].senderId,
-                };
-                for (let j = 0; j < this.inboxes[queue[i].recipient].length; j++){
-                    this.inboxes[queue[i].recipient][j].inbox(message);
-                }
-            } else {
-                queue[i].attempts++;
-                if (queue[i].attempts >= queue[i].maxAttempts){
-                    queue.splice(i, 1);
+        if (this.queue.length){
+            const queue = this.queue.splice(0, this.queue.length);
+            for (let i = queue.length - 1; i >= 0; i--){
+                if (this.inboxes?.[queue[i].recipient]){
+                    const message:InboxEvent = {
+                        data: queue[i].data,
+                        replyId: queue[i].senderId,
+                    };
+                    for (let j = 0; j < this.inboxes[queue[i].recipient].length; j++){
+                        this.inboxes[queue[i].recipient][j].inbox(message);
+                    }
+                } else {
+                    queue[i].attempts++;
+                    if (queue[i].attempts >= queue[i].maxAttempts){
+                        queue.splice(i, 1);
+                    }
                 }
             }
+            this.queue = [...this.queue, ...queue];
         }
-        this.queue = [...this.queue, ...queue];
+        setTimeout(this.flushQueue.bind(this), 1000);
     }
 
     private sendMessage(msg:ActorModelMessage):void{
@@ -107,6 +110,10 @@ class ActorModel {
     }
 
     public reply(replyId:string, message:ReplyMessage):void{
+        if (replyId === null){
+            console.error("Messaging error: replyId cannot be null");
+            return;
+        }
         let foundInbox = false;
         for (const alias in this.inboxes){
             for (let i = 0; i < this.inboxes[alias].length; i++){

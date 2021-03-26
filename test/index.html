@@ -54,6 +54,11 @@
                 data: "hello world",
                 senderId: inbox2Id,
             });
+            message({
+                recipient: "inbox3",
+                data: "hello world",
+                maxAttempts: 5,
+            });
         });
 
         const killBttn = document.body.querySelector(".js-kill");
