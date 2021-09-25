@@ -104,8 +104,11 @@ class ActorModel {
             recipient: null,
             data: null,
         }, message);
-        if (msg.recipient !== null && msg.data !== null){
+        if (msg.recipient !== null){
             this.sendMessage(msg);
+        }
+        else {
+            console.error("Messaging Error: recipient field required.");
         }
     }
 
