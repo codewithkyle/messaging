@@ -47,6 +47,13 @@
         }
         const inbox2Id = register("inbox2", inbox2);
 
+        setTimeout(()=>{
+        const inbox3 = ({ data, replyId}) => {
+            console.log("Inbox 3 recieved:", data);
+        }
+        const inbox3Id = register("inbox3", inbox3);
+        }, 10_000);
+
         const sendBttn = document.body.querySelector(".js-send");
         sendBttn.addEventListener("click", () => {
             message({
@@ -57,7 +64,7 @@
             message({
                 recipient: "inbox3",
                 data: "hello world",
-                maxAttempts: 5,
+                maxAttempts: Infinity,
             });
         });
 

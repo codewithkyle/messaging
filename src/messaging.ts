@@ -32,6 +32,7 @@ class ActorModel {
                     for (let j = 0; j < this.inboxes[queue[i].recipient].length; j++){
                         this.inboxes[queue[i].recipient][j].inbox(message);
                     }
+                    queue.splice(i, 1);
                 } else {
                     queue[i].attempts++;
                     if (queue[i].attempts >= queue[i].maxAttempts){
